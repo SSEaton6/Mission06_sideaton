@@ -9,9 +9,11 @@
     <form method="post">
         <label>Add Movies </label>
         <br />
+
         <label asp-for="MovieTitle">Movie Title: </label>
         <input type="text" id="MovieTitle" asp-for="MovieTitle" value="" required />
         <br />
+
         <label asp-for="MovieRating">Rating: </label>
 
         <select asp-for="MovieRating" requried>
@@ -21,29 +23,35 @@
             <option value="R">R</option>
         </select>
         <br />
+
         <label asp-for="MovieYear" required>Year: </label>
         <input type="number" id="Year" asp-for="MovieYear" value=" " />
         <br />
+
         <label asp-for="MovieDirector" required>Director: </label>
         <input type="text" id="MovieDirector" asp-for="MovieDirector" value=" " />
         <br />
+
         <label asp-for="Edited">Edited: </label>
         <select asp-for="Edited">
             <option value="true">Yes</option>
             <option value="false">No</option>
         </select>
         <br />
+
         <label asp-for="LentTo">Lent to: </label>
         <input type="number" id="LentTo" asp-for="LentTo" value=" " />
         <br />
+
         <label asp-for="Category" required>Category: </label>
         <input type="text" id="Category" asp-for="Category" value=" " />
         <br />
+
         <label asp-for="Notes">Notes: </label>
         <textarea asp-for="Notes" maxlength="25">Enter your notes here...</textarea>
         <br />
+
         <input id="sendbtn" type="submit" name="sendbtn" value="Submit" />
         <br />
-        <div asp-validation-summary="All"></div>
     </form>
 </div>
