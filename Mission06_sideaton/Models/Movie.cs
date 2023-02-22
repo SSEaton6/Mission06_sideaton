@@ -11,9 +11,9 @@ namespace Mission06_sideaton.Models
         [Key]
         [Required]
         public int MovieID { get; set; }
-        [Required]
+        [Required(ErrorMessage ="You must include a Movie Name")]
         public string MovieTitle { get; set; }
-        [Required]
+        [Required(ErrorMessage = "You must include a Movie Director")]
         public string MovieDirector { get; set; }
         [Required]
         public int MovieYear { get; set; }
@@ -22,7 +22,7 @@ namespace Mission06_sideaton.Models
         public string MovieRating { get; set; }
         public string Notes { get; set; }
         public string LentTo { get; set; }
-        [Required]
+        [Required(ErrorMessage = "You must include a Movie Category")]
 
         // Build Foreign Key relationship
         public int CategoryID { get; set; }

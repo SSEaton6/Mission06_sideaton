@@ -76,9 +76,19 @@ namespace Mission06_sideaton.Controllers
             return RedirectToAction("MovieList");
         }
 
-        public IActionResult Delete()
+        [HttpGet]
+        public IActionResult Delete(int MovieID)
         {
-            return View();
+            var movietoDelete = _movieContext.responses.Single(x => x.MovieID == MovieID);
+            return View(movietoDelete);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Movie res)
+        {
+            _movieContext.responses.Remove(res);
+            _movieContext.SaveChanges();
+            return RedirectToAction("MovieList");
         }
     }
 }
