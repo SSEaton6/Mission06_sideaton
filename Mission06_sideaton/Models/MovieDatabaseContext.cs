@@ -13,9 +13,28 @@ namespace Mission06_sideaton.Models
 
         }
         public DbSet<Movie> responses { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder mb)
         {
+            //seeding the database
+            mb.Entity<Category>().HasData(
+                new Category
+                {
+                    CategoryID = 1,
+                    CategoryName = "Comedy"
+                },
+                new Category
+                {
+                    CategoryID = 2,
+                    CategoryName = "Romance"
+                },
+                new Category
+                {
+                    CategoryID = 3,
+                    CategoryName = "Fantasy"
+                });
+
             mb.Entity<Movie>().HasData(
                 new Movie
                 {
@@ -27,7 +46,7 @@ namespace Mission06_sideaton.Models
                     MovieRating = "PG",
                     Notes = "",
                     LentTo = "",
-                    Category = "Romance/Fiction"
+                    CategoryID = 1
                 },
                 new Movie
                 {
@@ -39,7 +58,7 @@ namespace Mission06_sideaton.Models
                     MovieRating = "PG",
                     Notes = "",
                     LentTo = "",
-                    Category = "Musical/Fantasy"
+                    CategoryID = 1
                 },
                 new Movie
                 {
@@ -51,7 +70,7 @@ namespace Mission06_sideaton.Models
                     MovieRating = "PG",
                     Notes = "",
                     LentTo = "",
-                    Category = "Romance/Fiction/Children's"
+                    CategoryID = 2
                 }
             );
         }

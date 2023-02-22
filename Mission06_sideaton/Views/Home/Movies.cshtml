@@ -5,13 +5,14 @@
 <h1>Add New Movies to the Database!</h1>
 
 @model Mission06_sideaton.Models.Movie
+
 <div class="form">
     <form method="post">
         <label>Add Movies </label>
         <br />
 
         <label asp-for="MovieTitle">Movie Title: </label>
-        <input type="text" id="MovieTitle" asp-for="MovieTitle" value="" required />
+        <input type="text" id="MovieTitle" asp-for="MovieTitle"  required />
         <br />
 
         <label asp-for="MovieRating">Rating: </label>
@@ -25,11 +26,11 @@
         <br />
 
         <label asp-for="MovieYear" required>Year: </label>
-        <input type="number" id="Year" asp-for="MovieYear" value=" " />
+        <input type="number" id="Year" asp-for="MovieYear" />
         <br />
 
         <label asp-for="MovieDirector" required>Director: </label>
-        <input type="text" id="MovieDirector" asp-for="MovieDirector" value=" " />
+        <input type="text" id="MovieDirector" asp-for="MovieDirector"/>
         <br />
 
         <label asp-for="Edited">Edited: </label>
@@ -43,8 +44,14 @@
         <input type="number" id="LentTo" asp-for="LentTo" value=" " />
         <br />
 
-        <label asp-for="Category" required>Category: </label>
-        <input type="text" id="Category" asp-for="Category" value=" " />
+        <label asp-for="CategoryID" required>Category: </label>
+        <select asp-for="CategoryID">
+            <option>Select a Category</option>
+            @foreach (Category cat in ViewBag.Categories)
+            {
+                <option value ="@cat.CategoryID">@cat.CategoryName</option>
+            }
+        </select>
         <br />
 
         <label asp-for="Notes">Notes: </label>
@@ -53,5 +60,6 @@
 
         <input id="sendbtn" type="submit" name="sendbtn" value="Submit" />
         <br />
+        <div asp-validation-summary="All"></div>
     </form>
 </div>

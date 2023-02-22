@@ -15,15 +15,45 @@ namespace Mission06_sideaton.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.32");
 
+            modelBuilder.Entity("Mission06_sideaton.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CategoryID");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryID = 1,
+                            CategoryName = "Comedy"
+                        },
+                        new
+                        {
+                            CategoryID = 2,
+                            CategoryName = "Romance"
+                        },
+                        new
+                        {
+                            CategoryID = 3,
+                            CategoryName = "Fantasy"
+                        });
+                });
+
             modelBuilder.Entity("Mission06_sideaton.Models.Movie", b =>
                 {
                     b.Property<int>("MovieID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("Edited")
                         .HasColumnType("INTEGER");
@@ -51,13 +81,15 @@ namespace Mission06_sideaton.Migrations
 
                     b.HasKey("MovieID");
 
+                    b.HasIndex("CategoryID");
+
                     b.ToTable("responses");
 
                     b.HasData(
                         new
                         {
                             MovieID = 1,
-                            Category = "Romance/Fiction",
+                            CategoryID = 1,
                             Edited = false,
                             LentTo = "",
                             MovieDirector = "Joe Wright",
@@ -69,7 +101,7 @@ namespace Mission06_sideaton.Migrations
                         new
                         {
                             MovieID = 2,
-                            Category = "Musical/Fantasy",
+                            CategoryID = 1,
                             Edited = false,
                             LentTo = "",
                             MovieDirector = "Brenda Chapman",
@@ -81,7 +113,7 @@ namespace Mission06_sideaton.Migrations
                         new
                         {
                             MovieID = 3,
-                            Category = "Romance/Fiction/Children's",
+                            CategoryID = 2,
                             Edited = false,
                             LentTo = "",
                             MovieDirector = "Hayao Miyazaki",
@@ -90,6 +122,15 @@ namespace Mission06_sideaton.Migrations
                             MovieYear = 2004,
                             Notes = ""
                         });
+                });
+
+            modelBuilder.Entity("Mission06_sideaton.Models.Movie", b =>
+                {
+                    b.HasOne("Mission06_sideaton.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

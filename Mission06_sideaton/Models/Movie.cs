@@ -23,7 +23,10 @@ namespace Mission06_sideaton.Models
         public string Notes { get; set; }
         public string LentTo { get; set; }
         [Required]
-        public string Category { get; set; }
+
+        // Build Foreign Key relationship
+        public int CategoryID { get; set; }
+        public Category Category { get; set; }
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Mission06_sideaton.Models;
 using System;
@@ -11,15 +12,12 @@ namespace Mission06_sideaton.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private MovieDatabaseContext _movieContext { get; set; }
 
-        public HomeController(ILogger<HomeController> logger, MovieDatabaseContext someName)
+        public HomeController(MovieDatabaseContext someName)
         {
-            _logger = logger;
             _movieContext = someName;
         }
-
         public IActionResult Index()
         {
             return View();
@@ -32,20 +30,55 @@ namespace Mission06_sideaton.Controllers
         [HttpGet]
         public IActionResult Movies()
         {
+            ViewBag.Categories = _movieContext.Categories.ToList();
+
             return View();
         }
         [HttpPost]
         public IActionResult Movies(Movie response)
         {
-            _movieContext.Add(response);
+            if (ModelState.IsValid)
+            {
+                _movieContext.Add(response);
+                _movieContext.SaveChanges();
+                return View("Confirmation", response);
+            }
+            else //If values are invalid
+            {
+                ViewBag.Categories = _movieContext.Categories.ToList();
+                return View(response);
+            }
+        }
+        [HttpGet]
+        public IActionResult MovieList()
+        {
+            // ordering the list by year and sending them to the view
+            var movies = _movieContext.responses
+                .Include(cat => cat.Category)
+                .OrderBy(x => x.MovieYear)
+                .ToList();
+            return View(movies);
+        }
+        // allows the movies to be edited
+        [HttpGet]
+        public IActionResult Edit(int MovieID)
+        {
+            ViewBag.Categories = _movieContext.Categories.ToList();
+            var movie = _movieContext.responses.Single(x => x.MovieID == MovieID);
+            return View("Movies", movie);
+        }
+        [HttpPost]
+        public IActionResult Edit(Movie res)
+        {
+            _movieContext.Update(res);
             _movieContext.SaveChanges();
-            return View("Confirmation",response);
+            // instead of retyping in all the data, it redirects to the action
+            return RedirectToAction("MovieList");
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Delete()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
     }
 }

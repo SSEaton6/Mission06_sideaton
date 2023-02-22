@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Movie List";
+}
+@model List<Movie>
+<table class="table table-bordered table-striped">
+    <thead class="font-weight-bold">
+        <tr>
+            <th>Movie Name</th>
+            <th>Director</th>
+            <th>Year</th>
+            <th>Rating</th>
+            <th>Edited</th>
+            <th>Category</th>
+            <th>Lent to</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        @* Making a loop to run through the database and show all the entries *@
+        @foreach (var m in Model)
+            {
+                <tr>
+                    <td>@m.MovieTitle</td>
+                    <td>@m.MovieDirector</td>
+                    <td>@m.MovieYear</td>
+                    <td>@m.MovieRating</td>
+                    <td>@m.Edited</td>
+                    <td>@m.Category.CategoryName</td>
+                    <td>@m.LentTo</td>
+                    <td>@m.Notes</td>
+
+                    <td><a asp-controller="Home" asp-action="Edit" asp-route-MovieID="@m.MovieID">Edit</a></td>
+                    <td><a asp-controller="Home" asp-action="Delete" asp-route-MovieID="@m.MovieID">Delete</a></td>
+                </tr>
+            }
+    </tbody>
+</table>
